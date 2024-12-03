@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaksi</title>
+    <style>
+        table {
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        .header{
+            text-align: center;
+        }
+        .header a{
+            padding: 10px;
+            text-decoration: none;
+        }
+    </style>
+    <script>
+        function hitung() {
+            var HJogjakarta = 320000;
+            var HSurabaya = 540000;
+            var HSemarang = 240000;
+    
+            var kota = document.fform.kota.value;
+            var jumlah = parseInt(document.fform.jumlah.value);
+            var member = document.querySelector('input[name="Member"]:checked');
+            var hargaTiket = 0;
+            var subtotal = 0;
+    
+            if (kota === "Jogjakarta") {
+                hargaTiket = HJogjakarta;
+            } else if (kota === "Surabaya") {
+                hargaTiket = HSurabaya;
+            } else if (kota === "Semarang") {
+                hargaTiket = HSemarang;
+            }
+            subtotal = hargaTiket * jumlah;
+    
+            var diskon = 0;
+            if (member) {
+                if (member.value === "Gold") {
+                    diskon = subtotal * 0.2;
+                } else if (member.value === "Silver") {
+                    diskon = subtotal * 0.1;
+                }
+            }
+    
+            var totalBayar = subtotal - diskon;
+    
+            document.fform.HargaTiket.value = hargaTiket.toLocaleString('id-ID', { minimumFractionDigits: 3 });
+            document.fform.SubTotal.value = subtotal.toLocaleString('id-ID', { minimumFractionDigits: 3 });
+            document.fform.Diskon.value = diskon.toLocaleString('id-ID', { minimumFractionDigits: 3 });
+            document.fform.TotalBayar.value = totalBayar.toLocaleString('id-ID', { minimumFractionDigits: 3 });
+        }
+    
+        function bayar() {
+            var totalBayar = parseFloat(document.fform.TotalBayar.value.replace(/\./g, '').replace(',', '.'));
+            var nama = document.fform.nama.value;
+            var kota = document.fform.kota.value;
+            var jumlah = document.fform.jumlah.value;
+            var member = document.querySelector('input[name="Member"]:checked')?.value || "Non-member";
+            var hargaTiket = document.fform.HargaTiket.value;
+            var subtotal = document.fform.SubTotal.value;
+            var diskon = document.fform.Diskon.value;
+    
+            var nominalBayar = prompt("Masukkan jumlah uang yang dibayarkan:");
+            if (nominalBayar === null) return;
+    
+            nominalBayar = parseFloat(nominalBayar.replace(/\./g, '').replace(',', '.'));
+            if (nominalBayar < totalBayar) {
+                alert("Uang Anda kurang. Silakan bayar lagi.");
+                return;
+            }
+    
+            var kembalian = nominalBayar - totalBayar;
+    
+            document.getElementById("dataAwal").classList.add("hidden");
+            document.getElementById("buktiBayar").classList.remove("hidden");
+            document.getElementById("namaPenumpang").innerText = nama;
+            document.getElementById("tujuan").innerText = kota;
+            document.getElementById("jumlahTiket").innerText = jumlah;
+            document.getElementById("member").innerText = member;
+            document.getElementById("hargaTiket").innerText = hargaTiket;
+            document.getElementById("subTotal").innerText = subtotal;
+            document.getElementById("diskon").innerText = diskon;
+            document.getElementById("totalBayar").innerText = totalBayar.toLocaleString('id-ID', { minimumFractionDigits: 3 });
+            document.getElementById("dibayarkan").innerText = nominalBayar.toLocaleString('id-ID', { minimumFractionDigits: 3 });
+            document.getElementById("kembalian").innerText = kembalian.toLocaleString('id-ID', { minimumFractionDigits: 3 });
+        }
+    
+        function selesai() {
+            document.getElementById("dataAwal").classList.remove("hidden");
+            document.getElementById("buktiBayar").classList.add("hidden");
+        }
+    </script>
+    
+</head>
+<body>
+    <div id="dataAwal">
+            <div class="header">
+                <a href="index.html">Travel igasar</a>
+                <a href="tugas2.html">penilaan</a>
+            </div>
+    <center>
+            <form name="fform">
+                <table border="1">
+                    <tr>
+                        <td colspan="2">
+                            <center>
+                                <table>
+                                    <tr>
+                                        <td><img src="Picture1.png" alt="Logo Kami"></td>
+                                        <td>Travel Igasar Pindad Bandung</td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td colspan="3" style="text-align: center;">Data Pembayaran</td>
+                                </tr>
+                                <tr>
+                                    <td>Nama</td>
+                                    <td>:</td>
+                                    <td><input type="text" name="nama"></td>
+                                </tr>
+                                <tr>
+                                    <td>Tujuan</td>
+                                    <td>:</td>
+                                    <td>
+                                        <select name="kota">
+                                            <option value="Jogjakarta">Jogjakarta</option>
+                                            <option value="Surabaya">Surabaya</option>
+                                            <option value="Semarang">Semarang</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Jumlah Tiket</td>
+                                    <td>:</td>
+                                    <td><input type="number" name="jumlah"></td>
+                                </tr>
+                                <tr>
+                                    <td>Member</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="radio" name="Member" value="Gold">Gold
+                                        <input type="radio" name="Member" value="Silver">Silver
+                                        <input type="radio" name="Member" value="Non-member">Non-member
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td colspan="3" style="text-align: center;">Data Penumpang</td>
+                                </tr>
+                                <tr>
+                                    <td>Harga Tiket</td>
+                                    <td>:</td>
+                                    <td><input type="text" name="HargaTiket" disabled></td>
+                                </tr>
+                                <tr>
+                                    <td>Sub Total</td>
+                                    <td>:</td>
+                                    <td><input type="text" name="SubTotal" disabled></td>
+                                </tr>
+                                <tr>
+                                    <td>Diskon</td>
+                                    <td>:</td>
+                                    <td><input type="text" name="Diskon" disabled></td>
+                                </tr>
+                                <tr>
+                                    <td>Total Bayar</td>
+                                    <td>:</td>
+                                    <td><input type="text" name="TotalBayar" disabled></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center;">
+                            <button type="button" onclick="hitung()">Hitung</button>
+                            <button type="button" onclick="bayar()">Bayar</button>
+                            <button type="reset">Ulang</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id="buktiBayar" class="hidden">
+            <table>
+                <tr>
+                    <th><img src="Picture1.png" alt="igasar"></th>
+                    <th>Travel Igasar Pindad Bandung</th>
+                </tr>
+                <tr>
+                    <th colspan="3">Bukti Pembayaran</th>
+                </tr>
+                <tr>
+                    <td>Nama Penumpang :</td> <td id="namaPenumpang"></td>
+                </tr>
+                <tr>
+                    <td>Tujuan :</td> <td id="tujuan"></td>
+                </tr>
+                <tr>
+                    <td>Jumlah Tiket :</td> <td id="jumlahTiket"></td>
+                </tr>
+                <tr>
+                    <td>Member :</td> <td id="member"></td>
+                </tr>
+                <tr>
+                    <td>Harga Tiket :</td> <td id="hargaTiket"></td>
+                </tr>
+                <tr>
+                    <td>Sub Total :</td> <td id="subTotal"></td>
+                </tr>
+                <tr>
+                    <td>Diskon :</td> <td id="diskon"></td>
+                </tr>
+                <tr>
+                    <td>Total Bayar :</td> <td id="totalBayar"></td>
+                </tr>
+                <tr>
+                    <td>Dibayarkan :</td> <td id="dibayarkan"></td>
+                </tr>
+                <tr>
+                    <td>Kembalian :</td> <td id="kembalian"></td>
+                </tr>
+            </table>
+            <center>
+                <button onclick="selesai()">Selesai</button>
+            </center>
+        </div>
+    </center>
+</body>
+</html>

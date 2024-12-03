@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaksi</title>
+    <style>
+        .header{
+            text-align: center;
+            padding: 20px;
+        }
+        .header a{
+            padding: 10px;
+            text-decoration: none;
+        }
+    </style>
+    <script>
+        function hitungNilai(){
+            var nquis = parseInt(document.fform.quis.value);
+            var ntugas = parseInt(document.fform.tugas.value);
+            var nuts = parseInt(document.fform.uts.value);
+            var nuas = parseInt(document.fform.uas.value);
+            var indeks;
+            var keterangan;
+
+            var nHasil = (nquis * 0.1) + (ntugas * 0.2) + (nuts * 0.3) + (nuas * 0.4);
+
+            if (nHasil >= 80 && nHasil <= 100) {
+                indeks = "A";
+                keterangan = "Lulus dengan sangat baik";
+            } else if (nHasil >= 68 && nHasil < 80 ) {
+                indeks = "B";
+                keterangan = "Lulus dengan baik";
+            } else if (nHasil >= 55 && nHasil < 68) {
+                indeks = "C";
+                keterangan = "Lulus dengan cukup";
+            } else if (nHasil >= 38 && nHasil < 55) {
+                indeks = "D";
+                keterangan = "Lulus dengan kurang";
+            } else if (nHasil < 38) {
+                indeks = "E";
+                keterangan = "Tidak Lulus";
+            }
+
+            document.fform.nilai.value = nHasil.toFixed(2); 
+            document.fform.indeks.value = indeks;
+            document.fform.keterangan.value = keterangan;
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html">Travel igasar</a>
+        <a href="tugas2.html">penilaan</a>
+    </div>
+    <center>
+        <form name="fform">
+            <table border="1">
+                <tr>
+                    <td rowspan="3">
+                        <center>
+                            <img src="Picture1.png" alt="igasar" style="padding: 10px;">
+                        </center>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: center;">Menghitung Indeks Prestasi</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: center;">Peserta Didik SMK Igasar Pindad Bandung</td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px;">
+                        Quis (10% ):<input type="text" name="quis" size="4">
+                    </td>
+                    <td style="padding: 5px;">
+                        Tugas (20% ):<input type="text" name="tugas" size="4">
+                    </td>
+                    <td style="padding: 5px;">
+                        UTS (30% ):<input type="text" name="uts" size="4">
+                    </td>
+                    <td style="padding: 5px;">
+                        UAS (40% ):<input type="text" name="uas" size="4">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="padding: 20px; text-align: center;">
+                        <input type="button" value="Hitung" onclick="hitungNilai()">
+                        <input type="reset" value="Ulang">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center; padding: 5px;">
+                        Nilah Akhir : <input type="text" name="nilai" size="4">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center; padding: 5px;">
+                        Indeks Prestasi : <input type="text" name="indeks" size="4">
+                        Keterangan : <input type="text" name="keterangan">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </center>
+</body>
+</html>
